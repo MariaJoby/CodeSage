@@ -2,12 +2,15 @@ import toast from "react-hot-toast";
 import { explainIssue } from "../services/explainService";
 import { useEffect, useState } from "react";
 import { getHistory } from "../services/historyService";
+import ReactMarkdown from "react-markdown";
 import jsPDF from "jspdf";
 
 export default function History() {
   const [reviews, setReviews] = useState([]);
   const [openId, setOpenId] = useState(null);
   const [explanation, setExplanation] = useState("");
+  const [loadingExplanation, setLoadingExplanation] =
+  useState(false);
   const [search, setSearch] = useState("");
 const [sort, setSort] = useState("newest");
   const [selectedLanguage, setSelectedLanguage] =
@@ -28,12 +31,17 @@ const [sort, setSort] = useState("newest");
 
   const handleExplain = async (issue) => {
     try {
+      setLoadingExplanation(true);
+  
       const res = await explainIssue(issue);
+  
       setExplanation(res.explanation);
   
       toast.success("Explanation generated");
     } catch (err) {
       toast.error("Failed to explain issue");
+    } finally {
+      setLoadingExplanation(false);
     }
   };
 
@@ -255,12 +263,23 @@ const [sort, setSort] = useState("newest");
                     ))}
                   </ul>
                 </div>
+                {loadingExplanation && (
+  <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
+    <p className="text-yellow-400 animate-pulse">
+      Generating explanation...
+    </p>
+  </div>
+)}
                 {explanation && (
   <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
     <h3 className="text-yellow-400 font-semibold mb-2">
       AI Explanation
     </h3>
-    <p className="text-slate-300">{explanation}</p>
+    <div className="text-slate-300 whitespace-pre-wrap">
+  <ReactMarkdown>
+    {explanation}
+  </ReactMarkdown>
+</div>
   </div>
 )}
                 <div>
