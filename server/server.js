@@ -30,4 +30,3 @@ app.listen(PORT, () => {
 });
 
 
-console.log("JWT:", process.env.JWT_SECRET);
