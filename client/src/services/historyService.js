@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL =
-  "http://localhost:5000/api/review/history";
+  "https://codesage-backend-c7ue.onrender.com/api/review/history";
 
 export const getHistory = async () => {
   const token = localStorage.getItem("token");

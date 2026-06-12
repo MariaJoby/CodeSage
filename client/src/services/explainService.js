@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const explainIssue = async (issue) => {
   const res = await axios.post(
-    "http://localhost:5000/api/review/explain",
+    "https://codesage-backend-c7ue.onrender.com/api/review/explain",
     { issue },
     {
       headers: {

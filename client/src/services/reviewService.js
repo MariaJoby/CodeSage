@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/review";
+const API_URL = "https://codesage-backend-c7ue.onrender.com/api/review";
 
 export const reviewCode = async (data) => {
   const token = localStorage.getItem("token");
